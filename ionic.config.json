@@ -1,0 +1,7 @@
+{
+  "name": "SuitYuk",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

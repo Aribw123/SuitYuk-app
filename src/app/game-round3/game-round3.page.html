@@ -1,0 +1,107 @@
+<ion-content class="wood-bg">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span class="mode-pill pill-green">⭐ 3 ROUND WIN</span>
+    <ion-button fill="clear" class="icon-btn" (click)="resetGame()">
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Round Indicator -->
+  <div class="rounds-bar">
+    <span class="rl">RONDE:</span>
+    <div class="rdots">
+      <div class="rdot" *ngFor="let r of [0,1,2,3,4]"
+           [class.win]="state.rounds[r] === 'win'"
+           [class.lose]="state.rounds[r] === 'lose'"
+           [class.draw]="state.rounds[r] === 'draw'">
+      </div>
+    </div>
+    <span class="rl">{{ state.currentRound }}/5</span>
+  </div>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard pixel-border-dark">
+    <div class="score-side player">
+      <span class="score-name">KAMU</span>
+      <span class="score-num">{{ state.playerScore }}</span>
+    </div>
+    <div class="score-mid">
+      <span class="score-vs">VS</span>
+      <span class="score-round">RND {{ state.currentRound }}</span>
+    </div>
+    <div class="score-side cpu">
+      <span class="score-name">CPU</span>
+      <span class="score-num">{{ state.cpuScore }}</span>
+    </div>
+  </div>
+
+  <!-- Arena -->
+  <div class="arena pixel-border-dark">
+    <div class="arena-side player-side">
+      <span class="arena-label">PLAYER</span>
+      <div class="hand-display" [class.shake]="isShaking" [class.reveal]="isRevealing">
+        {{ playerEmoji }}
+      </div>
+    </div>
+    <div class="arena-divider">
+      <div class="div-dot" *ngFor="let d of [0,1,2,3,4]"></div>
+    </div>
+    <div class="arena-side cpu-side">
+      <span class="arena-label cpu-label">CPU</span>
+      <div class="hand-display" [class.shake]="isShaking" [class.reveal]="isRevealing">
+        {{ cpuEmoji }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Banner -->
+  <div class="result-banner pixel-border-dark">
+    <span class="result-text" [ngClass]="resultClass">{{ resultMsg }}</span>
+  </div>
+
+  <!-- Choice Buttons -->
+  <p class="choices-label">— PILIH SERANGANMU —</p>
+  <div class="choices-row">
+    <button class="choice-btn rock-btn"
+            [class.chosen]="chosenBtn === 'rock'"
+            [disabled]="isLocked"
+            (click)="play('rock')">
+      <span class="choice-icon">🪨</span>
+      <span class="choice-label">BATU</span>
+    </button>
+    <button class="choice-btn scissors-btn"
+            [class.chosen]="chosenBtn === 'scissors'"
+            [disabled]="isLocked"
+            (click)="play('scissors')">
+      <span class="choice-icon">✂️</span>
+      <span class="choice-label">GUNTING</span>
+    </button>
+    <button class="choice-btn paper-btn"
+            [class.chosen]="chosenBtn === 'paper'"
+            [disabled]="isLocked"
+            (click)="play('paper')">
+      <span class="choice-icon">📄</span>
+      <span class="choice-label">KERTAS</span>
+    </button>
+  </div>
+
+  <button class="back-btn" (click)="goToMenu()">← KEMBALI</button>
+
+  <!-- Game Over Overlay -->
+  <div class="overlay" *ngIf="showOverlay">
+    <div class="overlay-box pixel-border-gold">
+      <div class="trophy-anim">{{ overlayTrophy }}</div>
+      <h2 class="overlay-title" [ngClass]="overlayTitleClass">{{ overlayTitle }}</h2>
+      <p class="overlay-score">Skor Akhir: <span>{{ state.playerScore }} - {{ state.cpuScore }}</span></p>
+      <div class="rdhist">
+        <div *ngFor="let r of state.rounds" class="rdh"
+             [class.w]="r==='win'" [class.l]="r==='lose'" [class.d]="r==='draw'"></div>
+      </div>
+      <div class="overlay-btns">
+        <button class="ov-btn play-btn-ov" (click)="resetGame()">▶ MAIN LAGI</button>
+        <button class="ov-btn menu-btn-ov" (click)="goToMenu()">⌂ MENU</button>
+      </div>
+    </div>
+  </div>
+</ion-content>

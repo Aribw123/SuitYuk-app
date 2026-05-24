@@ -1,0 +1,122 @@
+<ion-content class="wood-bg">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span class="mode-pill pill-red">💀 DEATHMATCH</span>
+    <ion-button fill="clear" class="icon-btn" (click)="resetGame()">
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stat-row">
+    <div class="stat-box hp-box">
+      <span class="stat-label">❤ HP</span>
+      <span class="stat-val hp-val">{{ state.hp }}</span>
+      <div class="hp-bar-wrap">
+        <div class="hp-bar"
+             [style.width.%]="(state.hp / state.maxHp) * 100"
+             [class.mid]="state.hp / state.maxHp <= 0.5"
+             [class.low]="state.hp / state.maxHp <= 0.2">
+        </div>
+      </div>
+    </div>
+    <div class="stat-box streak-box">
+      <span class="stat-label">🔥 STREAK</span>
+      <span class="stat-val streak-val">{{ state.streak }}</span>
+    </div>
+    <div class="stat-box round-box">
+      <span class="stat-label">💀 RONDE</span>
+      <span class="stat-val round-val">{{ state.roundNum }}</span>
+    </div>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-wrap">
+    <p class="timer-label">— SISA WAKTU —</p>
+    <div class="timer-box"
+         [class.warn]="timeLeft <= 7 && timeLeft > 3"
+         [class.danger]="timeLeft <= 3">
+      <div class="tc tl"></div><div class="tc tr"></div>
+      <div class="tc bl"></div><div class="tc br"></div>
+      <span class="timer-num">{{ timeLeft }}</span>
+    </div>
+  </div>
+
+  <!-- Arena -->
+  <div class="arena pixel-border-dark">
+    <div class="arena-side dm-player-side">
+      <span class="arena-label dm-player-label">PLAYER</span>
+      <div class="hand-display" [class.shake]="isShaking" [class.reveal]="isRevealing">
+        {{ playerEmoji }}
+      </div>
+    </div>
+    <div class="arena-divider">
+      <div class="div-dot" *ngFor="let d of [0,1,2,3,4]"></div>
+    </div>
+    <div class="arena-side dm-cpu-side">
+      <span class="arena-label dm-cpu-label">CPU</span>
+      <div class="hand-display" [class.shake]="isShaking" [class.reveal]="isRevealing">
+        {{ cpuEmoji }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Banner -->
+  <div class="result-banner pixel-border-dark">
+    <span class="result-text" [ngClass]="resultClass">{{ resultMsg }}</span>
+  </div>
+
+  <!-- Streak Fire Message -->
+  <div class="streak-fire">{{ streakMsg }}</div>
+
+  <!-- Choice Buttons -->
+  <p class="choices-label">— PILIH SERANGANMU —</p>
+  <div class="choices-row">
+    <button class="choice-btn rock-btn"
+            [class.chosen]="chosenBtn === 'rock'"
+            [disabled]="isLocked"
+            (click)="play('rock')">
+      <span class="choice-icon">🪨</span>
+      <span class="choice-label">BATU</span>
+    </button>
+    <button class="choice-btn scissors-btn"
+            [class.chosen]="chosenBtn === 'scissors'"
+            [disabled]="isLocked"
+            (click)="play('scissors')">
+      <span class="choice-icon">✂️</span>
+      <span class="choice-label">GUNTING</span>
+    </button>
+    <button class="choice-btn paper-btn"
+            [class.chosen]="chosenBtn === 'paper'"
+            [disabled]="isLocked"
+            (click)="play('paper')">
+      <span class="choice-icon">📄</span>
+      <span class="choice-label">KERTAS</span>
+    </button>
+  </div>
+
+  <button class="back-btn" (click)="surrender()">← MENYERAH</button>
+
+  <!-- Game Over Overlay -->
+  <div class="overlay" *ngIf="showOverlay">
+    <div class="overlay-box pixel-border-gold">
+      <div class="trophy-anim">{{ overlayTrophy }}</div>
+      <h2 class="overlay-title" [ngClass]="overlayTitleClass">{{ overlayTitle }}</h2>
+      <div class="overlay-stats">
+        <p>Total Ronde: <span>{{ state.history.length }}</span></p>
+        <p>Menang: <span>{{ getWins() }}</span></p>
+        <p>Best Streak: <span>{{ state.bestStreak }}x</span></p>
+      </div>
+      <div class="rdhist">
+        <div *ngFor="let r of state.history.slice(-12)" class="rdh"
+             [class.w]="r==='win'" [class.l]="r==='lose'"
+             [class.d]="r==='draw'" [class.t]="r==='timeout'">
+        </div>
+      </div>
+      <div class="overlay-btns">
+        <button class="ov-btn play-btn-ov-dm" (click)="resetGame()">▶ MAIN LAGI</button>
+        <button class="ov-btn menu-btn-ov" (click)="goToMenu()">⌂ MENU</button>
+      </div>
+    </div>
+  </div>
+</ion-content>

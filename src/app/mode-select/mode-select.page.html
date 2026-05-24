@@ -1,0 +1,72 @@
+<ion-content class="wood-bg">
+  <div class="top-bar">
+    <span class="retro-label">✦ PILIH MODE ✦</span>
+    <div class="top-right">
+      <ion-button fill="clear" class="icon-btn refresh-btn" (click)="refreshPage()">
+        <ion-icon name="reload-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="flag-btn">🇮🇩</ion-button>
+    </div>
+  </div>
+
+  <div class="banner-wrap">
+    <div class="banner pixel-border">
+      <h2 class="banner-title-sm">PILIH MODE GAME</h2>
+    </div>
+  </div>
+
+  <p class="retro-subtitle-sm">— PILIH SATU MODE UNTUK MULAI —</p>
+
+  <!-- Mode Cards -->
+  <div class="cards-row">
+    <!-- 3 Round Win -->
+    <div class="mode-card card-green" (click)="selectMode('3round')">
+      <div class="card-ribbon ribbon-green">⭐ CLASSIC MODE</div>
+      <div class="card-sprite">🏆</div>
+      <h3 class="card-title green-text">3 ROUND<br>WIN</h3>
+
+      <div class="card-info">
+        <div class="info-row"><span class="dot dot-green"></span>Menangkan 3 ronde</div>
+        <div class="info-row"><span class="dot dot-green"></span>Best of 5 rounds</div>
+        <div class="info-row"><span class="dot dot-green"></span>Tanpa batas waktu</div>
+      </div>
+
+      <div class="round-preview">
+        <div class="rdot win"></div>
+        <div class="rdot win"></div>
+        <div class="rdot"></div>
+        <div class="rdot lose"></div>
+        <div class="rdot"></div>
+      </div>
+
+      <button class="card-play-btn btn-green">
+        <ion-icon name="play" size="small"></ion-icon> MULAI
+      </button>
+    </div>
+
+    <div class="vs-divider">
+      <div class="vs-pill">VS</div>
+    </div>
+
+    <!-- Deathmatch -->
+    <div class="mode-card card-red" (click)="selectMode('deathmatch')">
+      <div class="card-ribbon ribbon-red">💀 SURVIVAL MODE</div>
+      <div class="card-sprite">💀</div>
+      <h3 class="card-title red-text">DEATH<br>MATCH</h3>
+
+      <div class="card-info">
+        <div class="info-row"><span class="dot dot-red"></span>Timer per ronde</div>
+        <div class="info-row"><span class="dot dot-red"></span>HP berkurang jika kalah</div>
+        <div class="info-row"><span class="dot dot-red"></span>Makin lama makin cepat</div>
+      </div>
+
+      <div class="timer-preview">{{ demoTimer }}</div>
+
+      <button class="card-play-btn btn-red">
+        <ion-icon name="play" size="small"></ion-icon> MULAI
+      </button>
+    </div>
+  </div>
+
+  <button class="back-btn" (click)="goBack()">← KEMBALI KE MENU</button>
+</ion-content>
